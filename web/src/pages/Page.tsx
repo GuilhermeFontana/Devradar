@@ -110,92 +110,102 @@ export function Page() {
   }
 
   return (
-    <div id="app">
-      <aside>
-        <strong>Cadastrar</strong>
-        <form onSubmit={handleSubmit}>
-          <div className="input-block">
-            <label htmlFor="github_username">Usuário do GitHub</label>
-            <input 
-              id="github_username" 
-              name="github_username" 
-              value={github_username}
-              onChange={(e) => setGitHubUsername(e.target.value)}
-              required 
-              disabled={updating}
-            />
-          </div>
-
-          <div className="input-block">
-            <label htmlFor="techs">Tecnologias</label>
-            <input 
-              id="techs" 
-              name="techs" 
-              value={techs}
-              onChange={(e) => setTechs(e.target.value)}
-              required 
-            />
-          </div>  
-
-          <div className="input-group">
+    <>
+      <div id="app">
+        <aside>
+          <strong>Cadastrar</strong>
+          <form onSubmit={handleSubmit}>
             <div className="input-block">
-              <label htmlFor="latitude">Latitude</label>
+              <label htmlFor="github_username">Usuário do GitHub</label>
               <input 
-                id="latitude" 
-                name="latitude" 
-                type="number"
-                value={latitude} 
-                onChange={(e) => setLatitude(e.target.value)}
+                id="github_username" 
+                name="github_username" 
+                value={github_username}
+                onChange={(e) => setGitHubUsername(e.target.value)}
+                required 
+                disabled={updating}
+              />
+            </div>
+
+            <div className="input-block">
+              <label htmlFor="techs">Tecnologias</label>
+              <input 
+                id="techs" 
+                name="techs" 
+                value={techs}
+                onChange={(e) => setTechs(e.target.value)}
                 required 
               />
             </div>  
-            <div className="input-block">
-              <label htmlFor="longitude">Longitude</label>
-              <input 
-                id="longitude" 
-                name="longitude" 
-                type="number"
-                value={longitude} 
-                onChange={(e) => setLongitude(e.target.value)}
-                required 
-              />
-            </div>  
-          </div>
-          <button 
-            className='geolocation'
-            type="button" 
-            onClick={getCurrentPosition}
-          >Localização atual</button>
 
-          <button type="submit">Salvar</button>
-          {
-            updating &&
-            <button type="button" onClick={handleCancel}>Cancelar</button>
+            <div className="input-group">
+              <div className="input-block">
+                <label htmlFor="latitude">Latitude</label>
+                <input 
+                  id="latitude" 
+                  name="latitude" 
+                  type="number"
+                  value={latitude} 
+                  onChange={(e) => setLatitude(e.target.value)}
+                  required 
+                />
+              </div>  
+              <div className="input-block">
+                <label htmlFor="longitude">Longitude</label>
+                <input 
+                  id="longitude" 
+                  name="longitude" 
+                  type="number"
+                  value={longitude} 
+                  onChange={(e) => setLongitude(e.target.value)}
+                  required 
+                />
+              </div>  
+            </div>
+            <button 
+              className='geolocation'
+              type="button" 
+              onClick={getCurrentPosition}
+            >Localização atual</button>
+
+            <button type="submit">Salvar</button>
+            {
+              updating &&
+              <button type="button" onClick={handleCancel}>Cancelar</button>
+            }
+          </form>
+        </aside>
+        <main>
+          {devs.length > 0 ?
+            <ul>
+              {devs.map((dev) => (
+                <DevItem 
+                  key={dev._id}
+                  dev={dev}
+                  updateDev={handleUpdateDev}
+                  updatingDev={updating}
+                />
+              ))}
+            </ul>
+            :
+            <div className='no-devs'>
+              <strong>Nenhum dev encontrado</strong>
+              <span>Procure devs no <a href='https://github.com/' target={'blank'}>GitHub</a></span>
+            </div>
           }
-        </form>
-      </aside>
-      <main>
-        {devs.length > 0 ?
-        <ul>
-          {devs.map((dev) => (
-            <DevItem 
-              key={dev._id}
-              dev={dev}
-              updateDev={handleUpdateDev}
-              updatingDev={updating}
-            />
-          ))}
-        </ul>
-        :
-        <div className='no-devs'>
-          <strong>Nenhum dev encontrado</strong>
-        </div>
-        }
 
-        <Toaster 
-          position='bottom-right'
-        />
-      </main>
-    </div>
+          <Toaster 
+            position='bottom-right'
+          />
+        </main>
+      </div>
+      <footer className={devs.length === 0 ? 'fixed' : ''}>
+        Copyright © <a 
+          href='https://github.com/GuilhermeFontana/Devradar' 
+          target={'blank'} 
+          title="GitHub do projeto"
+        >Guiherme Fontana</a> 2022
+      </footer>
+    </>
   );
 }
