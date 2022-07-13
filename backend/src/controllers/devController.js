@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const dev = require('../models/dev');
-const { findConnections, findAllConnections, sendMessage } = require('../websocket')
+const { findConnections, sendMessage } = require('../websocket')
 const parseStringAsArray = require('../utils/parseStringAsArray');
 
 
@@ -17,7 +17,7 @@ const parseStringAsArray = require('../utils/parseStringAsArray');
 module.exports = {
     async index (req, res) { 
         return res
-            .json(await dev.find())
+            .json(await dev.find().sort("name"))
     },
 
     async show(req, res) {
