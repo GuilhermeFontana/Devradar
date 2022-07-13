@@ -175,6 +175,7 @@ export function Page() {
         </form>
       </aside>
       <main>
+        {devs.length > 0 ?
         <ul>
           {devs.map((dev) => (
             <DevItem 
@@ -185,6 +186,11 @@ export function Page() {
             />
           ))}
         </ul>
+        :
+        <div className='no-devs'>
+          <strong>Nenhum dev encontrado</strong>
+        </div>
+        }
 
         <Toaster 
           position='bottom-right'

@@ -122,8 +122,46 @@
             gap: 20px;
             list-style: none;
         }
+
+        .no-devs {
+            display: flex;;
+            justify-content: center;
+
+            strong {
+                    margin-top: 5px;
+                    font-weight: bold;
+                    color:#7d40e7;
+                    font-size: 24px;
+
+                    animation: textAnimation 0.9s infinite alternate linear;
+                }
+        }
     }
     
+}
+
+.toast {
+    display: flex;
+    padding:  5px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; 
+
+    button {
+        background: #835afd;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    button:hover {
+        cursor: pointer;
+    }
+        
+    span { 
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 1000px) { 
@@ -145,4 +183,10 @@
     #app main ul { 
         grid-template-columns: 1fr;
     }
+}
+
+@keyframes textAnimation {
+    0% { opacity: 0.6; }
+    50% { opacity: 0.75; }
+    100% { opacity: 1; }
 }

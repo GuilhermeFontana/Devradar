@@ -34,16 +34,30 @@ export default function DevItem(props: propsItemProps) {
     }, [props.updatingDev])
 
     async function handleRemoveDev() {
-        const result = await removeDev(github_username)
-        if (result === '') 
-            toast.success('Dev removido');
-        else {
-          toast.error(result, {
-            duration: 2000
-          })
-        };   
+      toast.dismiss();
 
-        removeDev(github_username)
+      toast((t) => (
+        <div className="toast">
+          <div className="texts">
+            <strong> Realmente deseja remover a pergunta?</strong>
+            <br />
+            <span>ou aguarde para cancelar</span>
+          </div>
+          <button
+            onClick={async () => {
+              toast.dismiss();
+
+              await toast.promise(removeDev(github_username), {
+                loading: 'Removendo...',
+                success: <p>Dev removido</p>,
+                error: <p>Erro ao remover dev</p>
+              })
+            }}
+            >
+            Sim
+          </button>
+        </div>
+      ))
     }
 
     async function handleEditDev(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
@@ -72,7 +86,7 @@ export default function DevItem(props: propsItemProps) {
                         type="button"
                         onClick={(e) => {handleEditDev(e)}}
                     >
-                            <img src={editDevImg} alt="Remover dev"/>
+                            <img src={editDevImg} alt="Editar dev"/>
                     </button>
                 }
                 <button
