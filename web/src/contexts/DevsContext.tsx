@@ -61,7 +61,12 @@ export function DevsContextProvider(props: DevsContextProviderProps) {
         return await api.post('/api/devs', dev)
             .then(response => {
                if (response.status === 200) {
-                    setDevs([...devs, response.data])
+                    setDevs([...devs, response.data].sort((a: devType , b: devType) => {
+                        const aName = a.name || a.github_username;
+                        const bName = b.name || b.github_username;
+
+                        return aName.localeCompare(bName)
+                    }))
 
                     return '';
                } 
